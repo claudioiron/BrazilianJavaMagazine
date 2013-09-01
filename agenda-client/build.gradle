@@ -1,20 +1,13 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
-// Define souce code compatibility
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
-
-// Use maven repository
 repositories {
     mavenCentral()
 }
 
 dependencies {
 	compile 'org.glassfish.jersey.core:jersey-client:+'
-	// http://jersey.576304.n2.nabble.com/How-to-configure-JSON-POJO-in-Jersey-2-0-client-td7580652.html
 	compile 'org.glassfish.jersey.media:jersey-media-json-jackson:+'
 
 	testCompile 'junit:junit:+'
-	
 }
