@@ -1,0 +1,13 @@
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+	providedCompile 'org.glassfish.jersey.media:jersey-media-json-jackson:+'	
+	providedCompile 'javax.ws.rs:javax.ws.rs-api:+'
+	
+	testCompile 'junit:junit:+'
+}
