@@ -11,7 +11,11 @@ public class AgendaError {
     private String stackTrace;
 
     public AgendaError(final Exception e) {
-        message = e.getMessage();
+        this(e.getMessage(), e);
+    }
+
+    public AgendaError(final String message, final Exception e) {
+        this.message = message;
 
         StringWriter sw = new StringWriter();
         e.printStackTrace(new PrintWriter(sw));

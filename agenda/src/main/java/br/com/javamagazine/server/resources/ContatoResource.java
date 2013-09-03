@@ -13,12 +13,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -29,47 +29,42 @@ import javax.ws.rs.core.StreamingOutput;
 public class ContatoResource {
 	private static final Logger LOGGER = Logger.getLogger(ContatoResource.class.getName());
 
-	private static Integer PROXIMO_ID = 1;
+    private static Integer PROXIMO_ID = 1;
     private static final Map<Integer, Contato> CONTATOS = new ConcurrentHashMap<>();
     private static final Map<Integer, byte[]> CONTATOS_FOTOS = new ConcurrentHashMap<>();
 
-	@GET()
+    @GET
     @Produces({"application/json; qs=1", "application/xml ; qs=0.75"})
-	public List<Contato> buscarTodos(){
-		return new ArrayList<Contato>(CONTATOS.values());
-	}
+    public List<Contato> buscarTodos() {
+        return new ArrayList<Contato>(CONTATOS.values());
+    }
 
-	@GET()
+	@GET
 	@Path("{id}")
 	@Produces({"application/json; qs=1", "application/xml ; qs=0.75"})
 	public Contato buscar(@PathParam("id") final Integer id){
 		return CONTATOS.get(id);
 	}
 
-	@PUT()
-	@Consumes("application/json")
-	@Produces({"application/json; qs=1", "application/xml ; qs=0.75"})
-	public Contato criar(final Contato contato){
-		Contato clone = contato.clone();
+    @POST
+    @Consumes("application/json")
+    @Produces({"application/json; qs=1", "application/xml ; qs=0.75"})
+    public Contato salvar(@Valid final Contato contato) {
+        if(contato.getId()==null){
+            Contato clone = contato.clone();
 
-		Integer id = pegarProximoId();
-		clone.setId(id);
-		LOGGER.log(Level.INFO, "Criando " + clone);
-		CONTATOS.put(id, clone);
-	    return clone;
-	}
-
-	@POST()
-	@Consumes("application/json")
-	public void alterar(final Contato contato) throws Exception {
-		if(contato.getId()==null){
-			throw new RuntimeException("Contato não pode ser alterado pois ele não possui um id!");
-		}
-		LOGGER.log(Level.INFO, "Alterando " + contato);
+            Integer id = pegarProximoId();
+            clone.setId(id);
+            LOGGER.log(Level.INFO, "Criando " + clone);
+            CONTATOS.put(id, clone);
+            return clone;
+        }
+        LOGGER.log(Level.INFO, "Alterando " + contato);
         CONTATOS.put(contato.getId(), contato);
-	}
+        return contato;
+    }
 
-	@DELETE()
+	@DELETE
 	@Path("{id}")
 	public void remover(@PathParam("id") final Integer id){
 		if(CONTATOS.get(id)!=null) {
@@ -81,7 +76,7 @@ public class ContatoResource {
 		}
 	}
 
-	@GET()
+	@GET
 	@Path("pesquisarpor")
 	@Produces({"application/json; qs=1", "application/xml ; qs=0.75"})
 	public List<Contato> pesquisarPor(@DefaultValue("") @QueryParam("nome") final String nome){
@@ -95,12 +90,12 @@ public class ContatoResource {
 		return result;
 	}
 
-	@POST()
+	@POST
 	@Path("{id}/foto")
 	@Consumes("application/octet-stream")
 	public void uploadFoto(@PathParam("id") final Integer id, final InputStream in) throws Exception {
 		if(!CONTATOS.containsKey(id)){
-			throw new RuntimeException("Não foi possível encontra contato com o id '" + id + "' para anexar a foto!");
+			throw new RuntimeException("Não foi possível encontrar contato com id '" + id + "' para anexar a foto!");
 		}
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();

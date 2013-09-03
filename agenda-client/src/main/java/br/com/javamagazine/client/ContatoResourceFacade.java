@@ -42,15 +42,11 @@ public class ContatoResourceFacade {
 			.get(Contato.class);
 	}
 
-	public Contato criar(final Contato contato){
-		return target.request(APPLICATION_JSON)
-				.put(Entity.json(contato), Contato.class);
-	}
-
-	public void alterar(final Contato contato) {
-		Response resp = target.request()
-			.post(Entity.json(contato));
+	public Contato salvar(final Contato contato){
+		Response resp = target.request(APPLICATION_JSON)
+				.post(Entity.json(contato));
 		throwExceptionIFError(resp);
+        return resp.readEntity(Contato.class);
 	}
 
 	public void remover(final Integer id){
@@ -78,7 +74,8 @@ public class ContatoResourceFacade {
     }
 
     private void throwExceptionIFError(final Response resp) {
-        if(resp.getStatus()==500){
+        int status = resp.getStatus();
+        if(status>=400 && status<600){
              AgendaError error = resp.readEntity(AgendaError.class);
              throw new AgendaServerException(error);
         }

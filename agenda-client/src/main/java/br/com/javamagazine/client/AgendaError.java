@@ -10,6 +10,8 @@ public class AgendaError {
     private String message;
     private String stackTrace;
 
+    public AgendaError(){}
+
     public AgendaError(final Exception e) {
         message = e.getMessage();
 

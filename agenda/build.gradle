@@ -8,6 +8,7 @@ repositories {
 dependencies {
 	providedCompile 'org.glassfish.jersey.media:jersey-media-json-jackson:+'	
 	providedCompile 'javax.ws.rs:javax.ws.rs-api:+'
+    providedCompile 'javax.validation:validation-api:+'
 	
 	testCompile 'junit:junit:+'
 }

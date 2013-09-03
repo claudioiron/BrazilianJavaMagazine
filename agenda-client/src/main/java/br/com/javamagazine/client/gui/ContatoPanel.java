@@ -198,10 +198,10 @@ public class ContatoPanel extends JPanel {
             public void actionPerformed(final ActionEvent e) {
 				Contato contato = getContato();
 				if(contato.getId()==null){
-					setContato(facade.criar(contato));
+					setContato(facade.salvar(contato));
 					JOptionPane.showMessageDialog(ContatoPanel.this, "Contato criado com suceso!");
 				} else {
-					facade.alterar(contato);
+					facade.salvar(contato);
 					table.setElement(contato);
 					JOptionPane.showMessageDialog(ContatoPanel.this, "Contato alterado com suceso!");
 				}

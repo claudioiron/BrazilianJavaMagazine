@@ -54,7 +54,7 @@ public class ContatoResourceFacadeTest {
 	public void testCriar(){
 		Contato c = null;
 		try{
-			c = res.criar(fernandoRubbo);
+			c = res.salvar(fernandoRubbo);
 			assertThat(c.getId(), is(notNullValue()));
 		} finally {
 			res.remover(c.getId());
@@ -67,9 +67,9 @@ public class ContatoResourceFacadeTest {
 		Contato fs = null;
 		Contato mj = null;
 		try{
-			fr = res.criar(fernandoRubbo);
-			fs = res.criar(fernandoSantos);
-			mj = res.criar(michaelJackson);
+			fr = res.salvar(fernandoRubbo);
+			fs = res.salvar(fernandoSantos);
+			mj = res.salvar(michaelJackson);
 			List<Contato> expected = Arrays.asList(fr, fs, mj);
 			Collections.sort(expected);
 
@@ -89,9 +89,9 @@ public class ContatoResourceFacadeTest {
 		Contato fs = null;
 		Contato mj = null;
 		try{
-			fr = res.criar(fernandoRubbo);
-			fs = res.criar(fernandoSantos);
-			mj = res.criar(michaelJackson);
+			fr = res.salvar(fernandoRubbo);
+			fs = res.salvar(fernandoSantos);
+			mj = res.salvar(michaelJackson);
 			List<Contato> expected = Arrays.asList(fr, fs);
 			Collections.sort(expected);
 
@@ -111,9 +111,9 @@ public class ContatoResourceFacadeTest {
 		Contato fs = null;
 		Contato mj = null;
 		try{
-			fr = res.criar(fernandoRubbo);
-			fs = res.criar(fernandoSantos);
-			mj = res.criar(michaelJackson);
+			fr = res.salvar(fernandoRubbo);
+			fs = res.salvar(fernandoSantos);
+			mj = res.salvar(michaelJackson);
 
 			List<Contato> list = res.pesquisarPor("M");
 			assertThat(list, is(Arrays.asList(mj)));
@@ -130,9 +130,9 @@ public class ContatoResourceFacadeTest {
 		Contato fs = null;
 		Contato mj = null;
 		try{
-			fr = res.criar(fernandoRubbo);
-			fs = res.criar(fernandoSantos);
-			mj = res.criar(michaelJackson);
+			fr = res.salvar(fernandoRubbo);
+			fs = res.salvar(fernandoSantos);
+			mj = res.salvar(michaelJackson);
 			List<Contato> expected = Arrays.asList(fr, fs, mj);
 			Collections.sort(expected);
 
@@ -150,7 +150,7 @@ public class ContatoResourceFacadeTest {
 	public void testBuscarExistente(){
 		Contato c = null;
 		try {
-			c = res.criar(fernandoRubbo);
+			c = res.salvar(fernandoRubbo);
 			Contato b = res.buscar(c.getId());
 			assertThat(b, is(notNullValue()));
 			assertThat(b.getId(), is(c.getId()));
@@ -165,7 +165,7 @@ public class ContatoResourceFacadeTest {
 
 	@Test
 	public void testRemover(){
-		Contato c = res.criar(fernandoRubbo);
+		Contato c = res.salvar(fernandoRubbo);
 		res.remover(c.getId());
 		Contato b = res.buscar(c.getId());
 		assertThat(b, is(nullValue()));
@@ -177,19 +177,14 @@ public class ContatoResourceFacadeTest {
 
 		Contato c = null;
 		try{
-			c = res.criar(fernandoRubbo);
+			c = res.salvar(fernandoRubbo);
 			c.setNome(novoNome);
-			res.alterar(c);
+			res.salvar(c);
 			Contato b = res.buscar(c.getId());
 			assertThat(b.getNome(), is(novoNome));
 		} finally {
 			res.remover(c.getId());
 		}
-	}
-
-	@Test(expected=Exception.class)
-	public void testAlterarInesistente() throws Exception{
-		res.alterar(fernandoRubbo);
 	}
 
 	@Test(expected=Exception.class)
@@ -204,7 +199,7 @@ public class ContatoResourceFacadeTest {
 
 		Contato c = null;
 		try{
-			c = res.criar(fernandoRubbo);
+			c = res.salvar(fernandoRubbo);
 			res.uploadFoto(c.getId(), new ByteArrayInputStream(foto));
 		} finally {
 			res.remover(c.getId());
