@@ -6,7 +6,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-public class AgendaExceptionMapper implements ExceptionMapper<Exception> {
+public class GenericExceptionMapper implements ExceptionMapper<Exception> {
 
     @Override
     public Response toResponse(final Exception e) {
