@@ -32,9 +32,13 @@ public class ContatoResourceFacade {
     }
 
 	public List<Contato> buscarTodos(){
-		return target.request(APPLICATION_JSON)
-			.get(LIST_CONTATO_TYPE);
+	    return pesquisar(null);
 	}
+
+	public List<Contato> pesquisar(final String nome){
+        return target.queryParam("nome", nome)
+                .request(APPLICATION_JSON).get(LIST_CONTATO_TYPE);
+    }
 
 	public Contato buscar(final Integer id){
 		return target.path("{id}").resolveTemplate("id", id)
@@ -53,11 +57,6 @@ public class ContatoResourceFacade {
 	    Response resp = target.path("{id}").resolveTemplate("id", id)
 			.request().delete();
 	    throwExceptionIFError(resp);
-	}
-
-	public List<Contato> pesquisarPor(final String nome){
-		return target.path("pesquisarpor").queryParam("nome", nome)
-				.request(APPLICATION_JSON).get(LIST_CONTATO_TYPE);
 	}
 
 	public void uploadFoto(final Integer id, final byte[] foto) {

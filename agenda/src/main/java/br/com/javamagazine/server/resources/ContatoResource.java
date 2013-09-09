@@ -35,8 +35,15 @@ public class ContatoResource {
 
     @GET
     @Produces({"application/json; qs=1", "application/xml ; qs=0.75"})
-    public List<Contato> buscarTodos() {
-        return new ArrayList<Contato>(CONTATOS.values());
+    public List<Contato> pesquisar(@DefaultValue("") @QueryParam("nome") final String nome){
+        List<Contato> result = new ArrayList<>();
+        Collection<Contato> contatos = CONTATOS.values();
+        for (Contato contato : contatos) {
+            if(contato.getNome().startsWith(nome)) {
+                result.add(contato);
+            }
+        }
+        return result;
     }
 
 	@GET
@@ -74,20 +81,6 @@ public class ContatoResource {
 		} else {
 			LOGGER.log(Level.INFO, "Contato com id " + id + " não existe e, portanto, nada foi excluído");
 		}
-	}
-
-	@GET
-	@Path("pesquisarpor")
-	@Produces({"application/json; qs=1", "application/xml ; qs=0.75"})
-	public List<Contato> pesquisarPor(@DefaultValue("") @QueryParam("nome") final String nome){
-		List<Contato> result = new ArrayList<>();
-		Collection<Contato> contatos = CONTATOS.values();
-		for (Contato contato : contatos) {
-			if(contato.getNome().startsWith(nome)) {
-				result.add(contato);
-			}
-		}
-		return result;
 	}
 
 	@POST

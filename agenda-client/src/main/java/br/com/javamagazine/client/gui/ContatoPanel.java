@@ -244,7 +244,7 @@ public class ContatoPanel extends JPanel {
 				Contato contatoPesquisar = new Contato();
 				contatoPesquisar.setNome(nome);
 				setContato(contatoPesquisar);
-				table.setElements(facade.pesquisarPor(nome));
+				table.setElements(facade.pesquisar(nome));
 			}
 		});
 		GridBagConstraints gbc_btnPesquisar = new GridBagConstraints();

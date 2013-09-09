@@ -73,7 +73,7 @@ public class ContatoResourceFacadeTest {
 			List<Contato> expected = Arrays.asList(fr, fs, mj);
 			Collections.sort(expected);
 
-			List<Contato> result = res.pesquisarPor("");
+			List<Contato> result = res.pesquisar("");
 			Collections.sort(result);
 			assertThat(result, is(expected));
 		} finally {
@@ -95,7 +95,7 @@ public class ContatoResourceFacadeTest {
 			List<Contato> expected = Arrays.asList(fr, fs);
 			Collections.sort(expected);
 
-			List<Contato> result = res.pesquisarPor("Fernando");
+			List<Contato> result = res.pesquisar("Fernando");
 			Collections.sort(result);
 			assertThat(result, is(expected));
 		} finally {
@@ -115,7 +115,7 @@ public class ContatoResourceFacadeTest {
 			fs = res.salvar(fernandoSantos);
 			mj = res.salvar(michaelJackson);
 
-			List<Contato> list = res.pesquisarPor("M");
+			List<Contato> list = res.pesquisar("M");
 			assertThat(list, is(Arrays.asList(mj)));
 		} finally {
 			res.remover(fr.getId());
@@ -136,7 +136,7 @@ public class ContatoResourceFacadeTest {
 			List<Contato> expected = Arrays.asList(fr, fs, mj);
 			Collections.sort(expected);
 
-			List<Contato> result = res.buscarTodos();
+			List<Contato> result = res.pesquisar("");
 			Collections.sort(result);
 			assertThat(result, is(expected));
 		} finally {

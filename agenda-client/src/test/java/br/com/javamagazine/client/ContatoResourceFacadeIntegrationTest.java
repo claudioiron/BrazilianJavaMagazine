@@ -114,7 +114,7 @@ public class ContatoResourceFacadeIntegrationTest {
 			List<Contato> expected = Arrays.asList(fr, fs, mj);
 			Collections.sort(expected);
 
-			List<Contato> result = facade.pesquisarPor("");
+			List<Contato> result = facade.pesquisar("");
 			Collections.sort(result);
 			assertThat(result, is(expected));
 		} finally {
@@ -136,7 +136,7 @@ public class ContatoResourceFacadeIntegrationTest {
 			List<Contato> expected = Arrays.asList(fr, fs, mj);
 			Collections.sort(expected);
 
-			List<Contato> result = facade.pesquisarPor(null);
+			List<Contato> result = facade.pesquisar(null);
 			Collections.sort(result);
 			assertThat(result, is(expected));
 		} finally {
@@ -158,7 +158,7 @@ public class ContatoResourceFacadeIntegrationTest {
 			List<Contato> expected = Arrays.asList(fr, fs);
 			Collections.sort(expected);
 
-			List<Contato> result = facade.pesquisarPor("Fernando");
+			List<Contato> result = facade.pesquisar("Fernando");
 			Collections.sort(result);
 			assertThat(result, is(expected));
 		} finally {
@@ -178,7 +178,7 @@ public class ContatoResourceFacadeIntegrationTest {
 			fs = facade.salvar(fernandoSantos);
 			mj = facade.salvar(michaelJackson);
 
-			List<Contato> list = facade.pesquisarPor("M");
+			List<Contato> list = facade.pesquisar("M");
 			assertThat(list, is(Arrays.asList(mj)));
 		} finally {
 			facade.remover(fr.getId());
