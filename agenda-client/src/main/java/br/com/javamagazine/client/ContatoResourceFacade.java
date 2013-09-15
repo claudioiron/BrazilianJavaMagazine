@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 import br.com.javamagazine.client.exceptions.AgendaServerException;
-import br.com.javamagazine.client.providers.ObjectMapperProvider;
+import br.com.javamagazine.client.providers.ObjectMapperResolver;
 
 public class ContatoResourceFacade {
 	private final GenericType<List<Contato>> LIST_CONTATO_TYPE = new GenericType<List<Contato>>() {};
@@ -27,7 +27,7 @@ public class ContatoResourceFacade {
     }
 
     public ContatoResourceFacade(final String host, final int port) {
-        client = ClientBuilder.newClient().register(new JacksonFeature()).register(new ObjectMapperProvider());
+        client = ClientBuilder.newClient().register(new JacksonFeature()).register(new ObjectMapperResolver());
         target = client.target("http://" + host + ":" + port + "/agenda/api/contato");
     }
 

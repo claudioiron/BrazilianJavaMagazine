@@ -1,4 +1,4 @@
-package br.com.javamagazine.client.providers;
+package br.com.javamagazine.server.providers;
 
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
@@ -12,11 +12,11 @@ import org.codehaus.jackson.map.introspect.JacksonAnnotationIntrospector;
 import org.codehaus.jackson.xc.JaxbAnnotationIntrospector;
 
 @Provider
-public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
+public class ObjectMapperResolver implements ContextResolver<ObjectMapper> {
 
     final ObjectMapper combinedObjectMapper;
 
-    public ObjectMapperProvider() {
+    public ObjectMapperResolver() {
         combinedObjectMapper = createCombinedObjectMapper();
     }
 
